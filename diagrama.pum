@@ -1,0 +1,12 @@
+class Sonic
+class Badniks
+class Objetos
+class Anillos
+class Personaje 
+class Enemigo 
+Anillos --|> Objetos
+Badniks --|> Enemigo
+Badniks --|> Personaje 
+Sonic --|> Personaje 
+Sonic *-- Vida
+Sonic o-- Anillos
