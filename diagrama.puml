@@ -1,0 +1,117 @@
+@startuml
+class Jugador
+class Enemigo
+class Badnik
+class DrEggman
+
+Entidad <|-- Objetos
+Entidad <|-- Personaje
+Personaje <|-- Jugable
+Personaje <|-- Enemigo
+Enemigo <|-- Badnik
+Enemigo <|-- DrEggman
+
+class Sonic
+class Tails
+class Knuckles
+class AmyRose
+class Shadow
+class Silver
+class Blaze
+class Cream
+class Big
+
+Jugador <|-- Sonic
+Jugable <|-- Tails
+Jugable <|-- Knuckles
+Jugable <|-- AmyRose
+Jugable <|-- Shadow
+Jugable <|-- Silver
+Jugable <|-- Blaze
+Jugable <|-- Cream
+Jugable <|-- Big
+
+class Motobug
+class Crabmeat
+class BuzzBomber
+class Caterkiller
+class Burrobot
+class Orbinaut
+class Chopper
+class Batbrain
+
+Badnik <|-- Motobug
+Badnik <|-- Crabmeat
+Badnik <|-- BuzzBomber
+Badnik <|-- Caterkiller
+Badnik <|-- Burrobot
+Badnik <|-- Orbinaut
+Badnik <|-- Chopper
+Badnik <|-- Batbrain
+
+class Anillo
+class SuperAnillo
+class RedRing
+class VidaExtra
+class EscudoNormal
+class EscudoFuego
+class EscudoElectrico
+class EscudoAgua
+class Invencibilidad
+class ZapatillasVelocidad
+class Resorte
+class PlataformaMovil
+class Monitor
+class Checkpoint
+class ChaosEmerald
+class Llave
+class Puerta
+class Teletransportador
+class TrampaPinchos
+class Canon
+class Elevador
+class BloqueRompible
+class CajaItem
+class Boton
+class Interruptor
+class Reloj
+class Bomba
+class Barril
+class Vagon
+class Portal
+
+Objetos <|-- Anillo
+Objetos <|-- SuperAnillo
+Objetos <|-- RedRing
+Objetos <|-- VidaExtra
+Objetos <|-- EscudoNormal
+Objetos <|-- EscudoFuego
+Objetos <|-- EscudoElectrico
+Objetos <|-- EscudoAgua
+Objetos <|-- Invencibilidad
+Objetos <|-- ZapatillasVelocidad
+Objetos <|-- Resorte
+Objetos <|-- PlataformaMovil
+Objetos <|-- Monitor
+Objetos <|-- Checkpoint
+Objetos <|-- ChaosEmerald
+Objetos <|-- Llave
+Objetos <|-- Puerta
+Objetos <|-- Teletransportador
+Objetos <|-- TrampaPinchos
+Objetos <|-- Canon
+Objetos <|-- Elevador
+Objetos <|-- BloqueRompible
+Objetos <|-- CajaItem
+Objetos <|-- Boton
+Objetos <|-- Interruptor
+Objetos <|-- Reloj
+Objetos <|-- Bomba
+Objetos <|-- Barril
+Objetos <|-- Vagon
+Objetos <|-- Portal
+
+Sonic *-- "1" VidaExtra
+Sonic o-- "many" Anillo
+
+@enduml
