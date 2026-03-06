@@ -1,18 +1,148 @@
 @startuml
+interface IMovible {
+  +Mover()
+}
+
+interface IColisionable {
+  +DetectarColision()
+}
+
+interface IInteractuable {
+  +Interactuar()
+}
+
+interface IDanable {
+  +RecibirDanio()
+}
+
+class Entidad {
+  -x : float
+  -y : float
+  -activo : boolean
+  +Actualizar()
+}
+
+class Personaje {
+  -velocidad : float
+  -direccion : int
+  +Mover()
+  +Atacar()
+}
+
+class Sonic {
+  -energia : int
+  -anillos : int
+  +Saltar()
+}
+
+class Enemigo {
+  -danio : int
+  -estadoIA : String
+  +Atacar()
+}
+
+class Badnik
+class DoctorEggman {
+  -fase : int
+}
+
+class Objeto {
+  -estadoInterno : String
+  -visible : boolean
+  +AplicarEfecto()
+}
+
+class Vida {
+  -cantidad : int
+  +Restar()
+  +Sumar()
+}
+
+class Inventario {
+  -anillos : int
+  +AgregarAnillo()
+  +PerderAnillos()
+}
+
+class MotorFisica {
+  -gravedad : float
+  -friccion : float
+  +AplicarFisica()
+}
+
+class SistemaColision {
+  -precision : float
+  +VerificarColision()
+}
+
+class Maquina {
+  -resistencia : int
+  +Destruir()
+}
+
+class MemoriaJuego {
+  -progresoGeneral : String
+  +GuardarJuego()
+  +CargarJuego()
+}
+
+class MemoriaNivel {
+  -enemigosRestantes : int
+  -objetosActivos : int
+  +GuardarEstadoNivel()
+}
+
+class MemoriaJugador {
+  -anillosGuardados : int
+  -vidasGuardadas : int
+  +GuardarEstadoJugador()
+}
+
+class Anillo {
+  -valor : int
+  +Recolectar()
+}
+
+class Monitor {
+  -tipoPowerUp : String
+  +Romper()
+}
+
+class Escudo {
+  -durabilidad : int
+  +Proteger()
+}
+
+class VidaExtra {
+  -usada : boolean
+}
+
+class PuntoControl {
+  -activado : boolean
+}
+
+class Plataforma {
+  -movil : boolean
+}
+
+class Resorte {
+  -fuerza : float
+}
+
+class Pincho {
+  -danio : int
+}
+
+class BloqueRompible {
+  -resistencia : int
+}
+
+class Lava {
+  -temperatura : float
+}
+
 class Juego
 class Nivel
-class Entidad
-class Personaje
-class Sonic
-class Enemigo
-class Badnik
-class DoctorEggman
-class Objeto
-class Vida
-class Inventario
-class MotorFisica
-class SistemaColision
-class Maquina
 
 Personaje --|> Entidad
 Objeto --|> Entidad
@@ -21,75 +151,38 @@ Enemigo --|> Personaje
 Badnik --|> Enemigo
 DoctorEggman --|> Enemigo
 
-class Anillo
-class Monitor
-class Escudo
-class Invencibilidad
-class ZapatillaVelocidad
-class VidaExtra
-class PuntoControl
-class EsmeraldaCaos
-class Plataforma
-class Resorte
-class Pincho
-class BloqueRompible
-class Bomba
-class Barril
-class Interruptor
-class Puerta
-class Llave
-class Teletransportador
-class Elevador
-class Canon
-class Bloque
-class Reloj
-class Caja
-class Trampa
-class Vagon
-class Portal
-class PlataformaMovil
-class Muro
-class Agua
-class Lava
-
 Anillo --|> Objeto
 Monitor --|> Objeto
 Escudo --|> Objeto
-Invencibilidad --|> Objeto
-ZapatillaVelocidad --|> Objeto
 VidaExtra --|> Objeto
 PuntoControl --|> Objeto
-EsmeraldaCaos --|> Objeto
 Plataforma --|> Objeto
 Resorte --|> Objeto
 Pincho --|> Objeto
 BloqueRompible --|> Objeto
-Bomba --|> Objeto
-Barril --|> Objeto
-Interruptor --|> Objeto
-Puerta --|> Objeto
-Llave --|> Objeto
-Teletransportador --|> Objeto
-Elevador --|> Objeto
-Canon --|> Objeto
-Bloque --|> Objeto
-Reloj --|> Objeto
-Caja --|> Objeto
-Trampa --|> Objeto
-Vagon --|> Objeto
-Portal --|> Objeto
-PlataformaMovil --|> Objeto
-Muro --|> Objeto
-Agua --|> Objeto
 Lava --|> Objeto
 
+Personaje ..|> IMovible
+Personaje ..|> IColisionable
+Personaje ..|> IDanable
+
+Objeto ..|> IColisionable
+Objeto ..|> IInteractuable
+
+Enemigo ..|> IDanable
+
 Juego *-- "1..*" Nivel
+Juego *-- "1" MemoriaJuego
+
 Nivel *-- "1" Sonic
 Nivel *-- "1..*" Enemigo
 Nivel *-- "0..*" Objeto
+Nivel *-- "1" MemoriaNivel
 
 Sonic *-- "1" Vida
 Sonic *-- "1" Inventario
+Sonic *-- "1" MemoriaJugador
+
 Inventario *-- "0..50" Anillo
 DoctorEggman *-- "1" Maquina
 
