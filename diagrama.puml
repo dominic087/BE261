@@ -1,157 +1,177 @@
-@startuml sonic
-
+@startuml
 class Accion{
- +Ejecutar[]
++Ejecutar[]
 }
 
-class Movimiento {
- +Mover[]
+class Movimiento{
++Mover[]
 }
 
-class Colision {
- +Detectar[]
+class Colision{
++Detectar[]
 }
 
 class Danio{
- +Atacar[]
++Ataca[]
 }
 
 class Juego{
- +EstadoJuego : String
- +Iniciar[]
++EstadoJuego
++Iniciar()
 }
 
 class Nivel{
- +EstadoNivel : String
- +Cargar[]
++EstadoNivel
++Cargar()
 }
 
-class Isla{
- +EstadoIsla : String
+class Zona{
++EstadoZona
 }
 
 class Entidad{
- -PosicionX : float
- -PosicionY : float
- +EstadoActivo : boolean
- +Actualizar[]
+-PosicionX 
+-PosicionY 
++EstadoActivo 
++Actualizar()
 }
 
 class Personaje{
- -Velocidad : float
- +EstadoMovimiento : String
- +Mover[]
+-Velocidad 
++EstadoMovimiento 
++Mover()
 }
 
 class Sonic{
- -Energia : int
- +EstadoAtaque : String
- +Atacar[]
+-Energia 
++EstadoAtaque
++Atacar()
 }
 
 class Enemigo{
- -Danio : int
- +EstadoHostil : boolean
- +Atacar[]
+-Danio 
++EstadoHostil
++Atacar()
 }
 
 class Badnik{
- -Programa : String
- +EstadoRobot : String
+-Programa 
++EstadoRobot 
 }
 
 class DoctorEggman{
- -Plan : String
- +EstadoControl : String
+-Plan 
++EstadoControl 
 }
 
 class Objeto{
- -EstadoInterno : String
- +EstadoExterno : String
- +AplicarEfecto()
+-EstadoInterno 
++EstadoExterno 
++AplicarEfecto()
 }
 
 class Anillo{
- -Valor : int
- +EstadoVisible : boolean
+-Valor 
++EstadoVisible
 }
 
 class Monitor{
- -Contenido : String
- +EstadoRoto : boolean
+-Contenido
++EstadoRoto
 }
 
 class Escudo{
- -Duracion : int
- +EstadoProteccion : boolean
+-Duracion 
++EstadoProteccion
+}
+
+class Invencibilidad{
+-Duracion 
++EstadoActivo 
+}
+
+class ZapatillaVelocidad{
+-Duracion 
++EstadoRapido 
 }
 
 class VidaExtra{
- -Cantidad : int
- +EstadoDisponible : boolean
+-Cantidad 
++EstadoDisponible 
 }
 
 class PuntoControl{
- -Registro : int
- +EstadoActivo : boolean
+-Registro 
++EstadoActivo 
+}
+
+class EsmeraldaCaos{
+-Energia 
++EstadoMagico 
 }
 
 class Plataforma{
- -MovimientoInterno : String
- +EstadoSoporte : boolean
+-MovimientoInterno 
++EstadoSoporte 
 }
 
 class Resorte{
- -Fuerza : int
- +EstadoSalto : boolean
+-Fuerza 
++EstadoSalto
 }
 
 class Pincho{
- -Danio : int
- +EstadoPeligro : boolean
+-Danio 
++EstadoPeligro
 }
 
 class Bloque{
- -Resistencia : int
- +EstadoSolido : boolean
-}
-
-class Lava{
- -Temperatura : int
- +EstadoPeligro : boolean
+-Resistencia 
++EstadoSolido 
 }
 
 class Teletransportador{
- -Destino : String
- +EstadoActivo : boolean
+-Destino 
++EstadoActivo
+}
+
+class Lava{
+-Temperatura 
++EstadoPeligro 
 }
 
 class MotorFisica{
- -Gravedad : float
- +EstadoMotor : boolean
- +Calcular()
+-Gravedad 
++EstadoMotor 
++Calcular()
 }
 
 class SistemaColision{
- -Algoritmo : String
- +EstadoDeteccion : boolean
- +Detectar()
+-Algoritmo
++EstadoDeteccion
++Detectar()
 }
 
 class Maquina{
- -Energia : int
- +EstadoOperacion : boolean
+-Energia 
++EstadoOperacion 
 }
 
-'========================
-' MEMORIA
-'========================
-
 class MemoriaJuego{
- -DatoInterno : String
- +DatoGuardado : String
- +Guardar()
- +Cargar()
+-DatoInterno 
++DatoGuardado 
++Guardar()
++Cargar()
+}
+
+class Vida{
+-Cantidad 
++EstadoVida
+}
+
+class Inventario{
+-Capacidad 
++EstadoInventario 
 }
 
 Personaje --|> Entidad
@@ -166,34 +186,45 @@ DoctorEggman --|> Enemigo
 Anillo --|> Objeto
 Monitor --|> Objeto
 Escudo --|> Objeto
+Invencibilidad --|> Objeto
+ZapatillaVelocidad --|> Objeto
 VidaExtra --|> Objeto
 PuntoControl --|> Objeto
+EsmeraldaCaos --|> Objeto
 Plataforma --|> Objeto
 Resorte --|> Objeto
 Pincho --|> Objeto
 Bloque --|> Objeto
-Lava --|> Objeto
 Teletransportador --|> Objeto
+Lava --|> Objeto
 
 Objeto ..|> Accion
 Objeto ..|> Colision
 
 Personaje ..|> Movimiento
 Personaje ..|> Colision
+
 Enemigo ..|> Danio
 
 Juego *-- "1..*" Nivel
-Juego *-- "1" MemoriaJuego
+Nivel *-- "1..*" Zona
 
-Nivel *-- "1" Isla
-Nivel *-- "1" Sonic
-Nivel *-- "1..*" Enemigo
-Nivel *-- "0..*" Objeto
+Zona *-- "1" Sonic
+Zona *-- "1..*" Enemigo
+Zona *-- "0..*" Objeto
+
+Sonic *-- "1" Vida
+Sonic *-- "1" Inventario
+
+Inventario *-- "0..50" Anillo
 
 DoctorEggman *-- "1" Maquina
 
+Juego *-- "1" MemoriaJuego
+
 Personaje ..> MotorFisica
 Personaje ..> SistemaColision
+
 Enemigo ..> Sonic
 
 @enduml
