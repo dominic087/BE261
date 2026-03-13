@@ -1,153 +1,165 @@
-@startuml
-interface IMovible {
-  +Mover()
+@startuml sonic
+
+class Accion{
+ +Ejecutar[]
 }
 
-interface IColisionable {
-  +DetectarColision()
+class Movimiento {
+ +Mover[]
 }
 
-interface IInteractuable {
-  +Interactuar()
+class Colision {
+ +Detectar[]
 }
 
-interface IDanable {
-  +RecibirDanio()
+class Danio{
+ +Atacar[]
 }
 
-class Entidad {
-  -x : float
-  -y : float
-  -activo : boolean
-  +Actualizar()
+class Juego{
+ +EstadoJuego : String
+ +Iniciar[]
 }
 
-class Personaje {
-  -velocidad : float
-  -direccion : int
-  +Mover()
-  +Atacar()
+class Nivel{
+ +EstadoNivel : String
+ +Cargar[]
 }
 
-class Sonic {
-  -energia : int
-  -anillos : int
-  +Saltar()
+class Isla{
+ +EstadoIsla : String
 }
 
-class Enemigo {
-  -danio : int
-  -estadoIA : String
-  +Atacar()
+class Entidad{
+ -PosicionX : float
+ -PosicionY : float
+ +EstadoActivo : boolean
+ +Actualizar[]
 }
 
-class Badnik
-class DoctorEggman {
-  -fase : int
+class Personaje{
+ -Velocidad : float
+ +EstadoMovimiento : String
+ +Mover[]
 }
 
-class Objeto {
-  -estadoInterno : String
-  -visible : boolean
-  +AplicarEfecto()
+class Sonic{
+ -Energia : int
+ +EstadoAtaque : String
+ +Atacar[]
 }
 
-class Vida {
-  -cantidad : int
-  +Restar()
-  +Sumar()
+class Enemigo{
+ -Danio : int
+ +EstadoHostil : boolean
+ +Atacar[]
 }
 
-class Inventario {
-  -anillos : int
-  +AgregarAnillo()
-  +PerderAnillos()
+class Badnik{
+ -Programa : String
+ +EstadoRobot : String
 }
 
-class MotorFisica {
-  -gravedad : float
-  -friccion : float
-  +AplicarFisica()
+class DoctorEggman{
+ -Plan : String
+ +EstadoControl : String
 }
 
-class SistemaColision {
-  -precision : float
-  +VerificarColision()
+class Objeto{
+ -EstadoInterno : String
+ +EstadoExterno : String
+ +AplicarEfecto()
 }
 
-class Maquina {
-  -resistencia : int
-  +Destruir()
+class Anillo{
+ -Valor : int
+ +EstadoVisible : boolean
 }
 
-class MemoriaJuego {
-  -progresoGeneral : String
-  +GuardarJuego()
-  +CargarJuego()
+class Monitor{
+ -Contenido : String
+ +EstadoRoto : boolean
 }
 
-class MemoriaNivel {
-  -enemigosRestantes : int
-  -objetosActivos : int
-  +GuardarEstadoNivel()
+class Escudo{
+ -Duracion : int
+ +EstadoProteccion : boolean
 }
 
-class MemoriaJugador {
-  -anillosGuardados : int
-  -vidasGuardadas : int
-  +GuardarEstadoJugador()
+class VidaExtra{
+ -Cantidad : int
+ +EstadoDisponible : boolean
 }
 
-class Anillo {
-  -valor : int
-  +Recolectar()
+class PuntoControl{
+ -Registro : int
+ +EstadoActivo : boolean
 }
 
-class Monitor {
-  -tipoPowerUp : String
-  +Romper()
+class Plataforma{
+ -MovimientoInterno : String
+ +EstadoSoporte : boolean
 }
 
-class Escudo {
-  -durabilidad : int
-  +Proteger()
+class Resorte{
+ -Fuerza : int
+ +EstadoSalto : boolean
 }
 
-class VidaExtra {
-  -usada : boolean
+class Pincho{
+ -Danio : int
+ +EstadoPeligro : boolean
 }
 
-class PuntoControl {
-  -activado : boolean
+class Bloque{
+ -Resistencia : int
+ +EstadoSolido : boolean
 }
 
-class Plataforma {
-  -movil : boolean
+class Lava{
+ -Temperatura : int
+ +EstadoPeligro : boolean
 }
 
-class Resorte {
-  -fuerza : float
+class Teletransportador{
+ -Destino : String
+ +EstadoActivo : boolean
 }
 
-class Pincho {
-  -danio : int
+class MotorFisica{
+ -Gravedad : float
+ +EstadoMotor : boolean
+ +Calcular()
 }
 
-class BloqueRompible {
-  -resistencia : int
+class SistemaColision{
+ -Algoritmo : String
+ +EstadoDeteccion : boolean
+ +Detectar()
 }
 
-class Lava {
-  -temperatura : float
+class Maquina{
+ -Energia : int
+ +EstadoOperacion : boolean
 }
 
-class Juego
-class Nivel
+'========================
+' MEMORIA
+'========================
+
+class MemoriaJuego{
+ -DatoInterno : String
+ +DatoGuardado : String
+ +Guardar()
+ +Cargar()
+}
 
 Personaje --|> Entidad
 Objeto --|> Entidad
+
 Sonic --|> Personaje
 Enemigo --|> Personaje
+
 Badnik --|> Enemigo
 DoctorEggman --|> Enemigo
 
@@ -159,35 +171,29 @@ PuntoControl --|> Objeto
 Plataforma --|> Objeto
 Resorte --|> Objeto
 Pincho --|> Objeto
-BloqueRompible --|> Objeto
+Bloque --|> Objeto
 Lava --|> Objeto
+Teletransportador --|> Objeto
 
-Personaje ..|> IMovible
-Personaje ..|> IColisionable
-Personaje ..|> IDanable
+Objeto ..|> Accion
+Objeto ..|> Colision
 
-Objeto ..|> IColisionable
-Objeto ..|> IInteractuable
-
-Enemigo ..|> IDanable
+Personaje ..|> Movimiento
+Personaje ..|> Colision
+Enemigo ..|> Danio
 
 Juego *-- "1..*" Nivel
 Juego *-- "1" MemoriaJuego
 
+Nivel *-- "1" Isla
 Nivel *-- "1" Sonic
 Nivel *-- "1..*" Enemigo
 Nivel *-- "0..*" Objeto
-Nivel *-- "1" MemoriaNivel
 
-Sonic *-- "1" Vida
-Sonic *-- "1" Inventario
-Sonic *-- "1" MemoriaJugador
-
-Inventario *-- "0..50" Anillo
 DoctorEggman *-- "1" Maquina
 
 Personaje ..> MotorFisica
 Personaje ..> SistemaColision
-Enemigo ..> "1" Sonic
+Enemigo ..> Sonic
 
 @enduml
